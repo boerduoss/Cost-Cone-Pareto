@@ -1,0 +1,20 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# run files
+runs/
+viz/
+systems/13Bus/loadshape_active
+
+data_aggregation/*
+!/data_aggregation/comparison_outputs
+
+

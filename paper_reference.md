@@ -1,0 +1,15 @@
+
+@InProceedings{pmlr-v168-fan22a,
+  title = 	 {PowerGym: A Reinforcement Learning Environment for Volt-Var Control in Power Distribution Systems},
+  author =       {Fan, Ting-Han and Lee, Xian Yeow and Wang, Yubo},
+  booktitle = 	 {Proceedings of The 4th Annual Learning for Dynamics and Control Conference},
+  pages = 	 {21--33},
+  year = 	 {2022},
+  editor = 	 {Firoozi, Roya and Mehr, Negar and Yel, Esen and Antonova, Rika and Bohg, Jeannette and Schwager, Mac and Kochenderfer, Mykel},
+  volume = 	 {168},
+  series = 	 {Proceedings of Machine Learning Research},
+  month = 	 {23--24 Jun},
+  publisher =    {PMLR},
+  pdf = 	 {https://proceedings.mlr.press/v168/fan22a/fan22a.pdf},
+  url = 	 {https://proceedings.mlr.press/v168/fan22a.html},
+}
