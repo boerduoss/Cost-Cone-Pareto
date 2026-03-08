@@ -16,5 +16,7 @@ systems/13Bus/loadshape_active
 
 data_aggregation/*
 !/data_aggregation/comparison_outputs
+!/data_aggregation/*.py
+!/data_aggregation/*.sh
 
 
