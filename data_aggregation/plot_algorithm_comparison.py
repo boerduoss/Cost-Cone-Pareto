@@ -122,7 +122,6 @@ def main() -> None:
         axis.grid(True, alpha=0.3)
         axis.set_xlim(0, 1_000_000)
         axis.margins(x=0)
-        axis.tick_params(axis="both", labelsize=28)
 
     axes[-1].set_xlabel("Environment Steps", fontsize=34)
     fig.suptitle("Algorithm Comparison Across Training", y=0.98)
