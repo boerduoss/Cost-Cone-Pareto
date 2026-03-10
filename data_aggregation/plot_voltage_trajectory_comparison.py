@@ -35,13 +35,13 @@ NODE_COLORS = [
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Plot test-stage bus voltage trajectories for algorithms in a 1x4 subplot layout."
+        description="Plot test-stage bus voltage trajectories for algorithms in a 1x3 subplot layout."
     )
     parser.add_argument(
         "--algos",
         nargs="+",
         default=SUPPORTED_ALGOS,
-        help="Algorithms to plot. At most four are displayed in a 1x4 layout.",
+        help="Algorithms to plot. At most three are displayed in a 1x3 layout.",
     )
     parser.add_argument("--seed", type=int, default=1, help="Seed index to use for each algorithm.")
     parser.add_argument("--viz_dir", type=str, default="viz")
@@ -102,18 +102,25 @@ def main() -> None:
 
     node_color_map = build_node_color_map(loaded)
 
-    algo_groups = [algos[idx : idx + 4] for idx in range(0, len(algos), 4)]
+    algo_groups = [algos[idx : idx + 3] for idx in range(0, len(algos), 3)]
     output_paths = []
     for page_idx, algo_group in enumerate(algo_groups, start=1):
-        fig, axes = plt.subplots(1, 4, figsize=(24, 6.8), sharey=True)
-        if len(algo_group) < 4:
-            for axis in axes[len(algo_group):]:
+        fig, axes = plt.subplots(1, 3, figsize=(21, 6.8), sharey=True)
+        if not isinstance(axes, (list, tuple)):
+            try:
+                axes_flat = axes.flatten()
+            except AttributeError:
+                axes_flat = [axes]
+        else:
+            axes_flat = list(axes)
+        if len(algo_group) < 3:
+            for axis in axes_flat[len(algo_group):]:
                 axis.axis("off")
 
         upper_handle = None
         lower_handle = None
 
-        for axis, algo in zip(axes, algo_group):
+        for axis, algo in zip(axes_flat, algo_group):
             df, _ = loaded[algo]
             steps = df["step"]
             node_columns = [col for col in df.columns if col != "step"]
@@ -130,11 +137,13 @@ def main() -> None:
             lower_handle = axis.axhline(0.95, color="tab:red", linestyle="--", linewidth=2.0)
             upper_handle = axis.axhline(1.05, color="tab:orange", linestyle="--", linewidth=2.0)
             axis.set_title(ALGO_LABELS.get(algo, algo.upper()))
-            axis.set_xlabel("Episode Step", fontsize=22)
+            axis.set_xlabel("Episode Step", fontsize=26)
             axis.set_ylim(args.ylim_low, args.ylim_high)
+            axis.margins(x=0)
             axis.grid(True, alpha=0.25)
 
-        axes[0].set_ylabel("Voltage (p.u.)", fontsize=22)
+        if len(axes_flat) > 0:
+            axes_flat[0].set_ylabel("Voltage (p.u.)", fontsize=26)
         fig.suptitle("Test-Phase Bus Voltage Trajectories", y=0.98)
         if lower_handle is not None and upper_handle is not None:
             fig.legend(
@@ -145,9 +154,9 @@ def main() -> None:
                 frameon=True,
                 fancybox=False,
                 edgecolor="0.2",
-                bbox_to_anchor=(0.5, 0.02),
+                bbox_to_anchor=(0.5, 0.005),
             )
-        fig.tight_layout(rect=[0, 0.08, 1, 0.92])
+        fig.tight_layout(rect=[0, 0.12, 1, 0.93])
 
         if len(algo_groups) == 1:
             output_name = args.output_name

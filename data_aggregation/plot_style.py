@@ -7,7 +7,7 @@ ALGO_COLORS = {
     "caf_cone": "#009E73",
     "caf_cone_pareto": "#C00000",
     "cost_cone": "#7B61FF",
-    "cost_cone_pareto": "#900404",
+    "cost_cone_pareto": "#E61D1D",
 }
 
 
@@ -27,11 +27,11 @@ def apply_plot_style() -> None:
             "font.family": "serif",
             "font.serif": ["Times New Roman", "Times", "DejaVu Serif", "STIXGeneral"],
             "mathtext.fontset": "stix",
-            "axes.titlesize": 24,
-            "axes.labelsize": 22,
-            "xtick.labelsize": 18,
-            "ytick.labelsize": 18,
-            "legend.fontsize": 18,
-            "figure.titlesize": 28,
+            "axes.titlesize": 28,
+            "axes.labelsize": 32,
+            "xtick.labelsize": 28,
+            "ytick.labelsize": 28,
+            "legend.fontsize": 24,
+            "figure.titlesize": 32,
         }
     )

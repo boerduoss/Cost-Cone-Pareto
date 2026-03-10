@@ -106,7 +106,7 @@ def main() -> None:
     if not aggregated:
         raise FileNotFoundError(f"No algorithm data found under {data_dir}")
 
-    fig, axes = plt.subplots(2, 1, figsize=(13, 10.5), sharex=True)
+    fig, axes = plt.subplots(2, 1, figsize=(16.5, 13.0), sharex=True)
     legend_handles = {}
     for axis, metric in zip(axes, metrics_to_plot):
         for algo, algo_metrics in aggregated.items():
@@ -115,13 +115,16 @@ def main() -> None:
             x = agg["total_env_steps"].to_numpy()
             mean = agg["mean"].to_numpy()
             ci95 = agg["ci95"].to_numpy()
-            line, = axis.plot(x, mean, linewidth=2.5, color=color, label=ALGO_LABELS.get(algo, algo.upper()))
-            axis.fill_between(x, mean - ci95, mean + ci95, alpha=0.18, color=color)
+            line, = axis.plot(x, mean, linewidth=3.2, color=color, label=ALGO_LABELS.get(algo, algo.upper()))
+            axis.fill_between(x, mean - ci95, mean + ci95, alpha=0.22, color=color)
             legend_handles[algo] = line
-        axis.set_ylabel(metric.replace("_", " "), fontsize=22)
+        axis.set_ylabel(metric.replace("_", " "), fontsize=34)
         axis.grid(True, alpha=0.3)
+        axis.set_xlim(0, 1_000_000)
+        axis.margins(x=0)
+        axis.tick_params(axis="both", labelsize=28)
 
-    axes[-1].set_xlabel("Environment Steps", fontsize=22)
+    axes[-1].set_xlabel("Environment Steps", fontsize=34)
     fig.suptitle("Algorithm Comparison Across Training", y=0.98)
     fig.legend(
         [legend_handles[algo] for algo in aggregated.keys()],
@@ -131,9 +134,9 @@ def main() -> None:
         frameon=True,
         fancybox=False,
         edgecolor="0.2",
-        bbox_to_anchor=(0.5, 0.02),
+        bbox_to_anchor=(0.5, 0.015),
     )
-    fig.tight_layout(rect=[0, 0.08, 1, 0.94])
+    fig.tight_layout(rect=[0, 0.095, 1, 0.945], h_pad=2.0)
     figure_path = output_dir / args.output_name
     fig.savefig(figure_path, dpi=300)
     plt.close(fig)

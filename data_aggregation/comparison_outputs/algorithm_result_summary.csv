@@ -1,0 +1,4 @@
+algorithm,train_return,train_cost,test_return,test_cost,voltage_violation_rate
+COST-CONE-Pareto,-5.629 ± 0.332,0.000 ± 0.000,-5.138,0.149,0.00%
+PPO-Lag,-10.364 ± 0.076,0.056 ± 0.071,-5.853,0.281,23.40%
+PPO,-5.822 ± 0.642,8.060 ± 5.613,-4.993,15.387,54.17%
