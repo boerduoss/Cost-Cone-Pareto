@@ -1,6 +1,11 @@
 import argparse
 from pathlib import Path
 from typing import List
+import sys
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -46,7 +51,7 @@ def merge_seed_curves(curves: List[pd.DataFrame], value_key: str) -> pd.DataFram
 
 def main() -> None:
     args = parse_args()
-    project_root = Path(__file__).resolve().parent
+    project_root = PROJECT_ROOT
 
     runs_dir = Path(args.runs_dir).expanduser()
     if not runs_dir.is_absolute():

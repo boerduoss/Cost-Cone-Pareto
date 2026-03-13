@@ -5,6 +5,10 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import List, Tuple
 
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 
 SUPPORTED_ALGOS = ["ppo", "ppo_lag", "caf_cone", "caf_cone_pareto", "cost_cone", "cost_cone_pareto"]
 
@@ -65,7 +69,7 @@ def discover_jobs(args: argparse.Namespace, project_root: Path) -> List[Tuple[st
 def build_command(args: argparse.Namespace, project_root: Path, checkpoint_path: Path) -> List[str]:
     cmd = [
         sys.executable,
-        str(project_root / "test_agent_trajectory.py"),
+        str(project_root / "scripts" / "test_agent_trajectory.py"),
         "--checkpoint_path",
         str(checkpoint_path),
         "--device",
@@ -93,7 +97,7 @@ def run_one(args: argparse.Namespace, project_root: Path, job: Tuple[str, int, P
 
 def main() -> None:
     args = parse_args()
-    project_root = Path(__file__).resolve().parent
+    project_root = PROJECT_ROOT
     jobs = discover_jobs(args, project_root)
 
     if not jobs:
