@@ -1,6 +1,11 @@
 import argparse
 from pathlib import Path
 from typing import Dict, List
+import sys
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -97,7 +102,7 @@ def record_state(
 def main() -> None:
     args = parse_args()
     device = torch.device(args.device)
-    project_root = Path(__file__).resolve().parent
+    project_root = PROJECT_ROOT
     checkpoint_path = Path(args.checkpoint_path).expanduser()
     if not checkpoint_path.is_absolute():
         checkpoint_path = (project_root / checkpoint_path).resolve()

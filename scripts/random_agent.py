@@ -3,6 +3,13 @@
 
 """Random agent to probe enviroment
 """
+import os
+import sys
+
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
+
 import matplotlib.pyplot as plt
 import numpy as np
 import imageio
@@ -13,7 +20,6 @@ from powergym.env_register import make_env, remove_parallel_dss
 import argparse
 import random
 import itertools
-import sys, os
 import multiprocessing as mp
 
 def parse_arguments():

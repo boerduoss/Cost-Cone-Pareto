@@ -2,13 +2,16 @@
 
 set -euo pipefail
 
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT_DIR"
+
 export OMP_NUM_THREADS="${OMP_NUM_THREADS:-1}"
 export MKL_NUM_THREADS="${MKL_NUM_THREADS:-1}"
 export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-1}"
 export NUMEXPR_NUM_THREADS="${NUMEXPR_NUM_THREADS:-1}"
 
 
-uv run python run_parallel_train.py \
+uv run python scripts/run_parallel_train.py \
     --algos caf_cone ppo ppo_lag \
     --seeds 1 2 3 \
     --max_parallel 9 \
@@ -71,6 +74,4 @@ uv run python run_parallel_train.py \
 #     --device cpu \
 #     --torch_num_threads 1 \
 #     --torch_num_interop_threads 1
-
-
 
