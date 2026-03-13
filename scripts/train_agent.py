@@ -3,6 +3,11 @@ import json
 import math
 from pathlib import Path
 from typing import Dict, List
+import sys
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 import numpy as np
 import torch
@@ -91,7 +96,7 @@ def main() -> None:
         torch.set_num_interop_threads(args.torch_num_interop_threads)
     device = torch.device(args.device)
     set_seed(args.seed)
-    project_root = Path(__file__).resolve().parent
+    project_root = PROJECT_ROOT
     output_dir = Path(args.output_dir)
     if not output_dir.is_absolute():
         output_dir = project_root / output_dir

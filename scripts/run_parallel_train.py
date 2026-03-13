@@ -7,6 +7,10 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Optional
 
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 from rl_lib.common import generate_timestamp
 
 
@@ -64,7 +68,7 @@ def build_jobs(args: argparse.Namespace, project_root: Path) -> List[Job]:
             stderr_path = log_dir / f"{algo}_seed{seed}.err"
             command = [
                 sys.executable,
-                str(project_root / "train_agent.py"),
+                str(project_root / "scripts" / "train_agent.py"),
                 "--algo",
                 algo,
                 "--seed",
@@ -165,7 +169,7 @@ def generate_plots(
         for value_key in args.plot_keys:
             cmd = [
                 sys.executable,
-                str(project_root / "plot_training_results.py"),
+                str(project_root / "scripts" / "plot_training_results.py"),
                 "--timestamp",
                 args.timestamp,
                 "--algo",
@@ -188,7 +192,7 @@ def generate_plots(
 
 def main() -> None:
     args = parse_args()
-    project_root = Path(__file__).resolve().parent
+    project_root = PROJECT_ROOT
     jobs = build_jobs(args, project_root)
 
     print(f"timestamp={args.timestamp}")
